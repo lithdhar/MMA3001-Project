@@ -49,3 +49,29 @@ Downloaded on 6 October 2026 using a Google Colab script. The script requests th
 
 - Actual weather stands in for forecast weather.
 - The tariff is spot-linked, with network charges, GST and feed-in rate set out in the report.
+
+## Time conventions
+
+All data in this project is aligned to a single clock: **National Electricity Market (NEM) time**. This is Australian Eastern Standard Time (UTC+10) throughout the year, with no daylight saving.
+
+- Every timestamp marks the **end** of its interval (hour-ending). For example, 13:00 covers 12:00 to 13:00.
+- All timestamps are stored without a time-zone label and are interpreted as NEM time.
+- Hourly values are formed from AEMO's 5-minute data. Row 01:00 averages the readings from 00:05 to 01:00.
+
+### Alignment evidence
+
+| File | Evidence that it is on NEM time |
+| --- | --- |
+| AEMO price and demand | AEMO's published convention. The hourly series has consecutive one-hour steps over 669 days, with no 23-hour or 25-hour days. |
+| Weather (Melbourne) | The daily centre of mass of solar radiation stays between about 12.6 and 13.1 all year, with no daylight-saving jump. Solar noon in Melbourne is about 12:05 to 12:35 NEM time, which matches hour-ending labels. |
+| Victorian load profile (2025) | Correlation with AEMO demand is highest at zero lag (0.946) and lower when shifted by one hour. |
+| AEMO price forecasts (PD7DAY) | Published in NEM time. |
+| Household load (rbee) | Time of day only. The clock convention is **not yet confirmed**. |
+
+### Open item
+
+The household load file contains only a time of day. If it is on local clock time with daylight saving, evening values in summer would sit one hour later than NEM time. This will be confirmed with the data supplier. If it cannot be confirmed, a one-hour shift will be tested as a sensitivity case.
+
+### Automated check
+
+`tests/test_time_alignment.py` fails if the merged table contains gaps, duplicate hours, daylight-saving jumps, a solar peak inconsistent with NEM time, or a misaligned load profile.

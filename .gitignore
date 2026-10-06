@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+data/raw/pd7day_raw/
+data/raw/nslp_raw/
+data/raw/nslp_extracted/

@@ -66,7 +66,7 @@ All data in this project is aligned to a single clock: **National Electricity Ma
 | Weather (Melbourne) | The daily centre of mass of solar radiation stays between about 12.6 and 13.1 all year, with no daylight-saving jump. Solar noon in Melbourne is about 12:05 to 12:35 NEM time, which matches hour-ending labels. |
 | Victorian load profile (2025) | Correlation with AEMO demand is highest at zero lag (0.946) and lower when shifted by one hour. |
 | AEMO price forecasts (PD7DAY) | Published in NEM time. |
-| Household load (rbee) | Time of day only. The clock convention is **not yet confirmed**. |
+| Household load (rbee) | The household file contains only a time of day. Values are assumed to be kWh per half-hour, and each time label is treated as the start of the half-hour. The data supplier has been asked to confirm the units, the label convention and whether the clock includes daylight saving. A one-hour shift is tested as a sensitivity case. Public holidays are treated as ordinary weekdays or weekends. |
 
 ### Open item
 

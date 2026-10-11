@@ -93,7 +93,8 @@ def controller_b(pv, load, **kwargs):
 
 
 def controller_plan(pv, load, plan_spot_mwh, tariff=TARIFF, window=48, step=24,
-                    capacity=BATTERY_CAPACITY_KWH, energy0=None, **battery_kwargs):
+                    capacity=BATTERY_CAPACITY_KWH, energy0=None, p_max=BATTERY_POWER_KW,
+                    eta=BATTERY_EFF, k=BATTERY_SELF_DISCHARGE):
     """Controllers C and D: replan every `step` hours using prices `plan_spot_mwh`.
 
     At the start of each block the planner looks `window` hours ahead, starting from the
@@ -116,10 +117,10 @@ def controller_plan(pv, load, plan_spot_mwh, tariff=TARIFF, window=48, step=24,
     for start in range(0, len(pv_a), step):
         stop = min(start + window, len(pv_a))
         plan, _ = plan_battery(pv_a[start:stop], load_a[start:stop], buy[start:stop],
-                               fit[start:stop], energy, capacity=capacity)
+                               fit[start:stop], energy, capacity=capacity, p_max=p_max, eta=eta, k=k)
         for n in range(start, min(start + step, len(pv_a))):
             energy, p_actual[n] = euler_step(energy, plan[n - start], capacity=capacity,
-                                             **battery_kwargs)
+                                             p_max=p_max, eta_c=eta, eta_d=eta, k=k)
             stored[n] = energy
     imp, exp = grid_flows(pv_a, load_a, p_actual)
     return pd.DataFrame({"pv_kwh": pv_a, "load_kwh": load_a, "p_battery_kw": p_actual,

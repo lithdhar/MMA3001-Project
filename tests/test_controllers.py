@@ -107,3 +107,20 @@ def test_planner_copes_with_a_very_negative_price():
     spot[30:34] = -300.0
     run = controller_plan(pv, load, spot)
     assert energy_balance_error(run) < 1e-9
+
+def test_more_efficient_battery_is_never_worse_for_perfect_foresight():
+    pv, load, spot, _ = synthetic_days(days=10)
+    bills = []
+    for rt in (0.70, 0.90, 1.00):
+        run = controller_plan(pv, load, spot, eta=rt ** 0.5)
+        bills.append(annual_bill(run["import_kwh"], run["export_kwh"], spot, 10)["total"])
+    assert bills[0] >= bills[1] >= bills[2]
+
+
+def test_larger_battery_is_never_worse_for_perfect_foresight():
+    pv, load, spot, _ = synthetic_days(days=10)
+    bills = []
+    for cap in (5.0, 10.0, 20.0):
+        run = controller_plan(pv, load, spot, capacity=cap)
+        bills.append(annual_bill(run["import_kwh"], run["export_kwh"], spot, 10)["total"])
+    assert bills[0] >= bills[1] >= bills[2]

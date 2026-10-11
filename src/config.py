@@ -16,3 +16,14 @@ BATTERY_ROUNDTRIP_EFF = 0.90      # energy out / energy in over a full cycle
 BATTERY_EFF = BATTERY_ROUNDTRIP_EFF ** 0.5   # one-way efficiency (charge = discharge)
 BATTERY_SELF_DISCHARGE = 0.001    # fraction of stored energy lost per hour
 BATTERY_START_SOC = 0.5           # state of charge at the start of the simulation
+
+
+# Tariff: a spot-linked retailer in the CitiPower (inner Melbourne) area
+TARIFF = {
+    "network_other_c_kwh": 15.0,   # network, environmental and market charges, excl GST (c/kWh)
+    "gst": 0.10,                   # GST added to everything you buy
+    "supply_per_day": 1.2114,      # daily supply charge incl GST ($/day)
+    "feed_in_mode": "spot",        # "spot" = paid the spot price, "fixed" = flat rate below
+    "feed_in_fixed_c_kwh": 5.0,    # used only when feed_in_mode is "fixed" (c/kWh)
+    "feed_in_floor_zero": True,    # True: exports earn $0 (never cost money) when spot is negative
+}

@@ -117,7 +117,8 @@ def controller_plan(pv, load, plan_spot_mwh, tariff=TARIFF, window=48, step=24,
     for start in range(0, len(pv_a), step):
         stop = min(start + window, len(pv_a))
         plan, _ = plan_battery(pv_a[start:stop], load_a[start:stop], buy[start:stop],
-                               fit[start:stop], energy, capacity=capacity, p_max=p_max, eta=eta, k=k)
+                               fit[start:stop], energy, capacity=capacity,
+                               p_max=p_max, eta=eta, k=k)
         for n in range(start, min(start + step, len(pv_a))):
             energy, p_actual[n] = euler_step(energy, plan[n - start], capacity=capacity,
                                              p_max=p_max, eta_c=eta, eta_d=eta, k=k)

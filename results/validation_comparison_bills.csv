@@ -1,0 +1,6 @@
+,Annual bill ($),Saving vs A ($),Forecast error cost vs D ($)
+A  No battery,1179.84,0.0,
+B  Simple rule,643.46,536.38,
+"C  SVR forecast, walk-forward",590.75,589.08,44.62
+"C  SVR forecast, fixed split",591.73,588.11,45.6
+D  Perfect foresight,546.13,633.7,

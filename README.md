@@ -17,7 +17,7 @@ Forecast error costs about $44.62 a year (the gap between C and D). C keeps 93% 
 
 ## Try it online
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://YOUR-APP-NAME.streamlit.app)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://mma3001-battery-advisor.streamlit.app)
 
 Describe a day (month, sky, temperatures, wind) and your home's solar and battery settings. The advisor forecasts the prices from the weather, plans the battery schedule and compares the cost of three strategies. Costs are expected values at forecast prices, so they are indicative rather than financial advice.
 

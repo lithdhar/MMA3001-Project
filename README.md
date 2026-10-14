@@ -54,6 +54,15 @@ Run the notebooks in numerical order. Each one reads the outputs of the earlier 
 | 14 | Sensitivity tests |
 | 15 | Profiling |
 
+## Validation
+
+The price forecast is tested in two ways on the same 359 days (1 October 2025 to 24 September 2026).
+
+1. **Walk-forward (main method, notebook 04).** The models are retrained before every 28-day block, using only data from before the block, with a 72-hour gap.
+2. **Fixed split (second method, notebook 16, `src/validation.py`).** The models are trained once on 287 days of data ending 72 hours before the test year, and then forecast the whole test year without being updated.
+
+Notebook 16 compares them. The SVR remains the best model under both methods (MAE $31.72/MWh walk-forward, $38.18/MWh fixed split, against $53.78/MWh for the baseline), and the household result barely changes: the forecast-driven controller costs $590.75 a year with walk-forward forecasts and $591.73 with fixed-split forecasts, against $643.46 for the simple rule.
+
 ## Tests
 
     pytest

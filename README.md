@@ -15,6 +15,12 @@ Simulated over 359 days (1 October 2025 to 24 September 2026) for a 6.6 kW solar
 
 Forecast error costs about $44.62 a year (the gap between C and D). C keeps 93% of the saving that D achieves relative to having no battery, and $52.71 of the $97.33 that D saves relative to the simple rule. The forecast-driven controller beats the simple rule only while the forecast mean absolute error stays below about $43/MWh. The SVR model has an error of $31.72/MWh.
 
+## Try it online
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://YOUR-APP-NAME.streamlit.app)
+
+Describe a day (month, sky, temperatures, wind) and your home's solar and battery settings. The advisor forecasts the prices from the weather, plans the battery schedule and compares the cost of three strategies. Costs are expected values at forecast prices, so they are indicative rather than financial advice.
+
 ## Repository layout
 
 | Folder | Contents |

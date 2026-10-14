@@ -1,0 +1,42 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.10.5, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\lithi\Documents\02. MMA3001\MMA3001\Project\MMA3001-Project
+plugins: anyio-4.13.0, platformdirs-4.12.3, cov-7.1.0
+collected 103 items
+
+tests\test_advisor.py .........                                          [  8%]
+tests\test_battery.py ........                                           [ 16%]
+tests\test_config_and_results.py ......                                  [ 22%]
+tests\test_controllers.py .............                                  [ 34%]
+tests\test_day_profile.py ......                                         [ 40%]
+tests\test_dispatch.py .........                                         [ 49%]
+tests\test_features.py ............                                      [ 61%]
+tests\test_household_load.py ....                                        [ 65%]
+tests\test_metrics_models.py ........                                    [ 72%]
+tests\test_numerics.py ...........                                       [ 83%]
+tests\test_pv.py .......                                                 [ 90%]
+tests\test_time_alignment.py ....                                        [ 94%]
+tests\test_validation.py ......                                          [100%]
+
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.10.5-final-0 _______________
+
+Name                 Stmts   Miss  Cover   Missing
+--------------------------------------------------
+src\__init__.py          0      0   100%
+src\advisor.py          64      0   100%
+src\battery.py          21      0   100%
+src\config.py           12      0   100%
+src\controllers.py      61      0   100%
+src\day_profile.py      50      1    98%   62
+src\dispatch.py         21      0   100%
+src\features.py         28      0   100%
+src\load.py             17      0   100%
+src\metrics.py           5      0   100%
+src\models.py           10      0   100%
+src\numerics.py         54      0   100%
+src\pv.py                6      0   100%
+src\validation.py       26      0   100%
+--------------------------------------------------
+TOTAL                  375      1    99%
+============================ 103 passed in 26.31s =============================

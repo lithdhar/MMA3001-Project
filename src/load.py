@@ -28,5 +28,6 @@ def hourly_load(index, profile, scale=1.0):
         idx = pd.MultiIndex.from_arrays(
             [start.month, start.dayofweek >= 5, start.hour * 60 + extra_minutes])
         return key.reindex(idx).to_numpy()
-
+        """Profile values for each hour, read `extra_minutes` after the start of the hour."""
+        
     return pd.Series((look(0) + look(30)) * scale, index=index, name="load_kwh")

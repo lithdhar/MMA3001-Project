@@ -115,7 +115,8 @@ def advise(day, price_model, profile, scale=1.0, pv_kw=None, capacity=BATTERY_CA
         table["battery_end_pct"] = [np.nan if k == "A" else 100 * runs[k]["soc"].iloc[-1]
                                     for k in table.index]
         return table
-
+        """Cost table for the strategies in `runs`, with the battery level at the end of the day."""
+        
     hourly = pd.DataFrame({"hour": day["hour"].to_numpy(), "price_mwh": spot,
                            "solar_kwh": solar, "load_kwh": load}, index=day.index)
     for k in ("B", "C"):

@@ -148,6 +148,6 @@ def main():
         "temperatures and wind. The price model uses weather and time only, so it cannot see "
         "outages, bidding behaviour or demand events. Battery: 90% round trip, grid-connected. "
         "This is not financial advice.")
-
+    """Draw the page: read the inputs, run the advisor and show the results."""
 
 main()

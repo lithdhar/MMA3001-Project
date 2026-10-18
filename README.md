@@ -27,7 +27,7 @@ Describe a day (month, sky, temperatures, wind) and your home's solar and batter
 | --- | --- |
 | `src/` | Python modules: forecast features and models, household load, solar and battery models, numerical methods, energy balance and bill, and the four controllers |
 | `tests/` | Automated tests (run with `pytest`) |
-| `notebooks/` | Notebooks 01 to 17, in the order of the analysis (see below) |
+| `notebooks/` | Notebooks 01 to 17, in the order of the analysis (there is no notebook 15; see below) |
 | `data/raw/` | Original data files (not edited) |
 | `data/processed/` | Cleaned and derived data |
 | `results/` | Forecasts, simulation runs, tables and figures |
@@ -59,7 +59,9 @@ Run the notebooks in numerical order. Each one reads the outputs of the earlier 
 | 12 | The four controllers |
 | 13 | Results and cost of forecast error |
 | 14 | Sensitivity tests |
-| ~~15~~ | ~~Profiling~~ _Removed in final repository no code within_ |
+| 15 | Not used. Run times are recorded in notebooks 04 and 12 |
+| 16 | Second validation method: fixed split compared with walk-forward |
+| 17 | Advisor engine and validation of the simplified-day description |
 | 16 | Second validation method: fixed split compared with walk-forward
 | 17 | Advisor engine and validation of the simplified-day description
 
@@ -77,7 +79,7 @@ Notebook 16 compares them. The SVR remains the best model under both methods (MA
     pytest
     pytest --cov=src --cov-report=term-missing
 
-The tests cover the time alignment of the data, the forecast features (including a check that no future information is used), the error measures and models, the household, solar and battery models, the numerical methods, the energy balance and bill, he day profile builder and the daily advisor, and the controllers. They also guard the headline results above.
+The tests cover the time alignment of the data, the forecast features (including a check that no future information is used), the error measures and models, the household, solar and battery models, the numerical methods, the energy balance and bill, the day profile builder and the daily advisor, and the controllers. They also guard the headline results above.
 
 ## Documentation
 
@@ -101,7 +103,7 @@ All files in `data/raw` are original and must not be edited. Cleaned data goes i
 | --- | --- | --- | --- | --- |
 | `aemo_vic_raw_price_demand.csv` | Victorian (VIC1) regional reference price (RRP, $/MWh) and total demand (MW) | 1 Dec 2024 to 1 Oct 2026 | 5-minute, 192,672 rows | AEMO, Aggregated Price and Demand data, monthly VIC1 files |
 | `aemo_vic_hourly_price_demand.csv` | Hourly version of the file above: mean, max and min price, mean demand, and price in $/kWh | 1 Dec 2024 to 1 Oct 2026 | Hourly, 16,056 rows | Derived from the raw AEMO file (see below) |
-| `weather_melbourne_hourly.csv` | Melbourne temperature, 10 m and 100 m wind speed, shortwave, direct and diffuse radiation | 1 Jan 2021 to 24 Sep 2026 | Hourly, 50,232 rows | Open-Metro Historical Forecast API |
+| `weather_melbourne_hourly.csv` | Melbourne temperature, 10 m and 100 m wind speed, shortwave, direct and diffuse radiation | 1 Jan 2021 to 24 Sep 2026 | Hourly, 50,232 rows | Open-Meteo Historical Forecast API |
 | `vic_5mlp_hourly.csv` | Victorian network load profile for five distribution areas plus a total | 29 Dec 2024 to 28 Dec 2025 | Hourly, 8,736 rows | AEMO net system load profile (NSLP) weekly files for 2025, aggregated to hourly |
 | `rbee extract by hour and state.csv` | Average household electricity use by state, month, weekday or weekend, and time of day | Typical day (no calendar year) | Half-hourly | Michael Ambrose - Pricipal Research Scientist at CSIRO |
 
@@ -114,7 +116,7 @@ These are too large for GitHub and are listed in `.gitignore`.
 | `pd7day_raw` | 180 AEMO 7-day pre-dispatch price forecast files (PD7DAY), about 3 per day, 1 Aug to 30 Sep 2026 | AEMO |
 | `nslp_raw` and `nslp_extracted` | 52 weekly AEMO frozen load profile files for 2025, zipped and extracted | AEMO |
 
-The PD7DAY files are AEMO's own forecasts, not actual prices. They are used only to benchmark my forecast models for August and September 2026.
+The PD7DAY files are AEMO's own forecasts, not actual prices. They were collected to benchmark my forecast models for August and September 2026, but they are not used in the reported results.
 
 ## How the AEMO price and demand data was obtained
 
@@ -154,11 +156,11 @@ All data in this project is aligned to a single clock: **National Electricity Ma
 | Weather (Melbourne) | The daily centre of mass of solar radiation stays between about 12.6 and 13.1 all year, with no daylight-saving jump. Solar noon in Melbourne is about 12:05 to 12:35 NEM time, which matches hour-ending labels. |
 | Victorian load profile (2025) | Correlation with AEMO demand is highest at zero lag (0.946) and lower when shifted by one hour. |
 | AEMO price forecasts (PD7DAY) | Published in NEM time. |
-| Household load (rbee) | The household file contains only a time of day. Values are assumed to be kWh per half-hour, and each time label is treated as the start of the half-hour. The data supplier has been asked to confirm the units, the label convention and whether the clock includes daylight saving. A one-hour shift is tested as a sensitivity case. Public holidays are treated as ordinary weekdays or weekends. |
+| Household load (rbee) | The household file contains only a time of day. Values are assumed to be kWh per half-hour, and each time label is treated as the start of the half-hour. The data supplier has been asked to confirm the units, the label convention and whether the clock includes daylight saving. Public holidays are treated as ordinary weekdays or weekends. |
 
 ### Open item
 
-The household load file contains only a time of day. If it is on local clock time with daylight saving, evening values in summer would sit one hour later than NEM time. This will be confirmed with the data supplier. If it cannot be confirmed, a one-hour shift will be tested as a sensitivity case.
+The household load file contains only a time of day. If it is on local clock time with daylight saving, evening values in summer would sit one hour later than NEM time. The data supplier has been asked to confirm this. Until it is confirmed, the timing of the household load is treated as a limitation of the household model.
 
 ### Automated check
 

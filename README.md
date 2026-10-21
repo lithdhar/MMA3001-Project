@@ -93,11 +93,27 @@ HTML documentation for every module is in `docs/`. Open `docs/index.html` in a b
 
 The code is released under the MIT licence (see `LICENSE`). The data files keep the terms of their original sources, listed below, and are not covered by that licence.
 
-# Data sources
+## Where the data is
 
-Data used for the MMA3001 project: forecasting Victorian electricity prices 3 to 5 days ahead and testing a solar-battery controller for a household.
+All the data needed to reproduce the results is in this repository, so nothing has to be downloaded.
 
-All files in `data/raw` are original and must not be edited. Cleaned data goes in `data/processed`.
+| Folder | Contents |
+| --- | --- |
+| `data/raw/` | The original data files listed in the table above. These are not edited. |
+| `data/processed/` | Files built from the raw data by the notebooks (the master table, the household load, solar output and the forecast input tables). |
+
+Notebook 01 reads `data/raw/` and writes `data/processed/`. The later notebooks read from `data/processed/`.
+
+## Data kept outside the repository
+
+These two sets are too large for GitHub and are listed in `.gitignore`. They are **not needed to reproduce the results**. The Victorian load profile used by the notebooks (`data/raw/vic_5mlp_hourly.csv`) was already built from the NSLP files, and the PD7DAY files are not used in the reported results. They are listed so that the full data trail is documented.
+
+| Data | Contents | Where to download it |
+| --- | --- | --- |
+| AEMO net system load profile (NSLP), 2025 | 52 weekly zip files (`Frozen_Profile_2025_Week_01.zip` to `Week_52.zip`) | [AEMO Load Profiles page](https://www.aemo.com.au/energy-systems/electricity/national-electricity-market-nem/data-nem/metering-data/load-profiles). Open the 2025 list on that page and download each weekly file. |
+| AEMO 7-day pre-dispatch price forecasts (PD7DAY), 1 Aug to 30 Sep 2026 | 180 zip files named `PUBLIC_PD7DAY_<date and time>_<id>.zip`, about three a day | [AEMO NEMweb current PD7DAY folder](https://www.nemweb.com.au/REPORTS/CURRENT/PD7Day/). This folder holds only recent files. Older ones are moved to the [NEMweb archive](https://www.nemweb.com.au/REPORTS/ARCHIVE/), where you can browse for the PD7Day folder. |
+
+To use them, save the files in `data/raw/nslp_raw/` and `data/raw/pd7day_raw/` (the folder names listed in `.gitignore`), and unzip the NSLP files into `data/raw/nslp_extracted/`..
 
 ## Files
 

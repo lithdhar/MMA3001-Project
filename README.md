@@ -2,7 +2,7 @@
 
 This project forecasts Victorian electricity prices three to five days ahead (Stage 1) and then uses the forecast in a controller for a household solar and battery system (Stage 2). It asks whether a forecast-driven controller reduces the household's electricity cost compared with simple rules, and how much of the possible benefit is lost to forecast error.
 
-**Project report:** [MMA3001_Project_Report.pdf](report/MMA3001_Project_Report.pdf)
+**Project report:** [34976639_Project_Report.pdf](34976639_Project_Report.pdf)
 
 ## Main results
 
